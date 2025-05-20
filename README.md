@@ -99,7 +99,7 @@ Different DTO's are used for both the Product and Discount, based on the necessa
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/cata2002/accesa_test.git
+git clone https://github.com/cata20002/accesa_test.git
 ```
 
 ### Build the Project
