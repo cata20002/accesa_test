@@ -1,5 +1,6 @@
 package com.test.accesa.controller;
 
+import com.test.accesa.DTO.PricePointDTO;
 import com.test.accesa.DTO.ProductRecommendationDTO;
 import com.test.accesa.entity.Product;
 import com.test.accesa.repository.ProductRepository;
@@ -24,6 +25,15 @@ public class ProductController {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         return productService.getCheaperAlternatives(product);
+    }
+
+    @GetMapping("/price-history")
+    public List<PricePointDTO> getPriceHistory(
+            @RequestParam String name,
+            @RequestParam(required = false) String storeName,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String category) {
+        return productService.getPriceHistory(name, storeName, brand, category);
     }
 
 

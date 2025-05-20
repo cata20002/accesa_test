@@ -1,5 +1,6 @@
 package com.test.accesa.service;
 
+import com.test.accesa.DTO.PricePointDTO;
 import com.test.accesa.DTO.ProductRecommendationDTO;
 import com.test.accesa.entity.Discount;
 import com.test.accesa.entity.Product;
@@ -22,6 +23,9 @@ public class ProductService {
      * Feature 5:
      * Finds cheaper alternatives for a given product based on its category and package type.
      * I opted to find alternatives only for 1 specific product, not a list with all alternatives, since it could be more useful in practice
+     * The products should have the same package type, for the division to be relevant.
+     * Only products from the same category are considered, to improve query speed, due to less results returned.
+     * The alternatives are sorted by price per unit, and the top 5 are returned.
      *
      * @param targetProduct The product for which to find alternatives.
      * @return A list of cheaper alternative products.
@@ -50,6 +54,24 @@ public class ProductService {
                 })
                 .sorted(Comparator.comparingDouble(ProductRecommendationDTO::pricePerUnit))
                 .limit(5)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Feature 4:
+     * Returns the price history of a product based on its name, store name, brand, and category.
+     * The method retrieves all products matching the criteria using the custom query and maps them to a list of PricePointDTO objects.
+     *
+     * @param name      The name of the product.
+     * @param storeName The name of the store.
+     * @param brand     The brand of the product.
+     * @param category  The category of the product.
+     * @return A list of PricePointDTO objects representing the price history of the product.
+     */
+    public List<PricePointDTO> getPriceHistory(String name, String storeName, String brand, String category) {
+        List<Product> products = productRepository.getPriceHistory(name, storeName, brand, category);
+        return products.stream()
+                .map(p -> new PricePointDTO(p.getCreatedAt(), p.getPrice()))
                 .collect(Collectors.toList());
     }
 
