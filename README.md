@@ -143,15 +143,6 @@ By default, the application will start on port 8080.
   - Parameters:
   - Response: List of newly added discounts (last 24 hours)
 
-### Price History
-
-- **GET** `/api/products/{productId}/price-history`
-  - Parameters:
-    - `startDate`: Beginning of the time period (optional)
-    - `endDate`: End of the time period (optional)
-    - `store`: Filter by store (optional)
-  - Response: Historical price data points for visualization
-
 ### Value Analysis
 
 - **GET** `/api/v1/products/substitutes/{productID}`
