@@ -37,18 +37,14 @@ public class DiscountService {
         return discountRepository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(yesterday, today);
     }
 
-    public List<Discount> getAllDiscounts() {
-        return discountRepository.findAll();
-    }
-
-/**
+    /**
      * Feature 2:
      * This method returns the top 5 discounts per store, sorted by discount percentage in descending order.
      * The result is a map where the key is the store name and the value is a list of TopDiscountDTO objects.
      * Each TopDiscountDTO object contains information about the product, brand, discount percentage, store name,
      * start date, and end date of the discount.
      *
-     * @return Map<String, List<TopDiscountDTO>> - A map containing the top 5 discounts per store.
+     * @return Map<String, List < TopDiscountDTO>> - A map containing the top 5 discounts per store.
      */
     public Map<String, List<TopDiscountDTO>> getTop5DiscountsPerStore() {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -131,4 +127,22 @@ public class DiscountService {
         return new OptimalCartDTO(storeMap, totalCost);
     }
 
+    /**
+     * Simple CRUD operations for further use
+     */
+    public void deleteDiscountById(Long id) {
+        discountRepository.deleteById(id);
+    }
+
+    public List<Discount> getAllDiscounts() {
+        return discountRepository.findAll();
+    }
+
+    public Discount getDiscountById(Long id) {
+        return discountRepository.findById(id).orElse(null);
+    }
+
+    public Discount saveDiscount(Discount discount) {
+        return discountRepository.save(discount);
+    }
 }

@@ -34,4 +34,27 @@ public class DiscountController {
         return discountService.optimizeShoppingBasket(basket);
     }
 
+    /**
+     * Simple CRUD endpoints
+     */
+    @GetMapping("/getAll")
+    public List<Discount> getAllDiscounts() {
+        return discountService.getAllDiscounts();
+    }
+
+    @GetMapping("/getById/{id}")
+    public Discount getDiscountById(@PathVariable long id) {
+        return discountService.getDiscountById(id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteDiscount(@PathVariable long id) {
+        discountService.deleteDiscountById(id);
+    }
+
+    @PostMapping("/addDiscount")
+    public Discount saveDiscount(@RequestBody Discount discount) {
+        return discountService.saveDiscount(discount);
+    }
+
 }

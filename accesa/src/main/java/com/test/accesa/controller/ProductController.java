@@ -5,10 +5,7 @@ import com.test.accesa.entity.Product;
 import com.test.accesa.repository.ProductRepository;
 import com.test.accesa.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +24,29 @@ public class ProductController {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         return productService.getCheaperAlternatives(product);
+    }
+
+
+    /**
+     * Simple CRUD endpoints
+     */
+    @GetMapping("/getAll")
+    public List<Product> getAllProducts() {
+        return productService.getAllProducts();
+    }
+
+    @GetMapping("/getById/{id}")
+    public Product getProductById(@PathVariable long id) {
+        return productService.getProductById(id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteProduct(@PathVariable long id) {
+        productService.deleteProduct(id);
+    }
+
+    @PostMapping("/addProduct")
+    public Product saveProduct(@RequestBody Product product) {
+        return productService.saveProduct(product);
     }
 }

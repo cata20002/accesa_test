@@ -101,10 +101,10 @@ public class ParsingService {
                                 p.getBrand().equalsIgnoreCase(tokens[2].trim()))
                         .findFirst();
                 List<Product> products = productRepository.findAll();
-                for(Product product : products) {
+                for (Product product : products) {
                     System.out.println(product);
                 }
-                System.out.println(tokens[1].trim()+ " "+ tokens[2].trim());
+                System.out.println(tokens[1].trim() + " " + tokens[2].trim());
 
                 if (productOpt.isEmpty()) {
                     System.err.println("No matching product found for discount: " + line);
