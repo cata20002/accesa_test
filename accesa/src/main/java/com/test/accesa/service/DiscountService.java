@@ -25,16 +25,23 @@ public class DiscountService {
     private ProductRepository productRepository;
 
     /**
-     * Feature 1:
+     * Feature 3:
      * This method returns all discounts that are active today or were active yesterday.
-     * The result is a list of Discount objects.
+     * The result is a list of Discount objects, wrapped in a ShoppingItemDTO, to avoid circular dependencies.
      *
-     * @return List<Discount> - A list of discounts that are active today or were active yesterday.
+     * @return List<ShoppingItemDTO> - A list of discounts that are active today or were active yesterday.
      */
-    public List<Discount> getAllRecentDiscounts() {
+    public List<ShoppingItemDTO> getAllRecentDiscounts() {
         Date yesterday = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000);
         Date today = new Date();
-        return discountRepository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(yesterday, today);
+        List<Discount> discountedItems = discountRepository.findAllByStartDateBetween(yesterday, today);
+        List<Product> discountedProducts = new ArrayList<>();
+        for (Discount d : discountedItems) {
+            discountedProducts.add(d.getProduct());
+        }
+        return discountedProducts.stream()
+                .map(p -> new ShoppingItemDTO(p.getName(), p.getBrand(), p.getPackageQuantity(), p.getPackageType()))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -74,10 +81,11 @@ public class DiscountService {
     }
 
     /**
-     * Feature 3:
+     * Feature 1:
      * This method optimizes a shopping basket by finding the best price for each item in the basket.
-     * It returns an OptimalCartDTO object containing the optimized shopping cart and the total cost.
+     * It returns an OptimalCartDTO object containing the optimized shopping cart, by checking all products with the same name and brand and updates the total cost.
      * The shopping list is sent as a normal list, not a standalone custom object.
+     * The optimalCartDTO contains a map of store names to lists of BestItemDTO objects, which represent the best price for each item in the basket.
      *
      * @param basket - A list of ShoppingItemDTO objects representing the items in the shopping basket.
      * @return OptimalCartDTO - An object containing the optimized shopping cart and total cost.
@@ -88,7 +96,6 @@ public class DiscountService {
         double totalCost = 0.0;
 
         for (ShoppingItemDTO item : basket) {
-            // Find all matching products
             List<Product> matches = productRepository.findByNameContainingIgnoreCaseAndBrandIgnoreCase(
                     item.productName(), item.brand()
             );
@@ -118,10 +125,8 @@ public class DiscountService {
                 }
             }
 
-            if (best != null) {
-                storeMap.computeIfAbsent(best.storeName(), k -> new ArrayList<>()).add(best);
-                totalCost += best.totalPrice();
-            }
+            storeMap.computeIfAbsent(best.storeName(), k -> new ArrayList<>()).add(best);
+            totalCost += best.totalPrice();
         }
 
         return new OptimalCartDTO(storeMap, totalCost);

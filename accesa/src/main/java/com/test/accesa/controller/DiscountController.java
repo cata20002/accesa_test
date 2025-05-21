@@ -23,9 +23,9 @@ public class DiscountController {
         return discountService.getTop5DiscountsPerStore();
     }
 
-    //could have a DTO, but since it is not used actively, it should be fine
+    //could have a DTO, but since it is the main class, it should be ok
     @GetMapping("/recent")
-    public List<Discount> getAllRecentDiscounts() {
+    public List<ShoppingItemDTO> getAllRecentDiscounts() {
         return discountService.getAllRecentDiscounts();
     }
 

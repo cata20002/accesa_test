@@ -20,10 +20,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     /**
      * Get all products by same name, store name, brand or category
      * Used for price history (Feature 4)
-     * @param name: product name
+     *
+     * @param name:      product name
      * @param storeName: store name
-     * @param brand: product brand
-     * @param category: product category
+     * @param brand:     product brand
+     * @param category:  product category
      * @return: list of products matching the criteria
      */
     @Query("SELECT p FROM Product p WHERE p.name = :name"

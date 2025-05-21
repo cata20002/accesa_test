@@ -79,7 +79,6 @@ public class ParsingService {
         List<Discount> discounts = new ArrayList<>();
         String fileName = new java.io.File(filePath).getName();
 
-        // Extract store name from filename: e.g. "lidl_discounts_2025-05-01.csv"
         String[] parts = fileName.split("_");
         if (parts.length < 2) {
             throw new IllegalArgumentException("Filename must be in format: store_discounts_yyyy-MM-dd.csv");

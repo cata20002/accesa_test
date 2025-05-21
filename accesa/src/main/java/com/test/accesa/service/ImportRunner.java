@@ -24,6 +24,11 @@ public class ImportRunner implements CommandLineRunner {
     @Autowired
     private DiscountRepository discountRepository;
 
+    /**
+     * This method is used to import data from CSV files into the database.
+     * It reads the product and discount data from the specified CSV files and saves them to the database, as objects.
+     * The method is executed when the application starts, if the property "import.data.enabled" is set to true.
+     */
     @Override
     public void run(String... args) {
         List<Product> profiProducts = parseCsvToProducts("src/main/resources/static/profi_2025-05-02.csv");
