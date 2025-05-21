@@ -189,7 +189,7 @@ public class ImportRunner implements CommandLineRunner {
     // Implementation
 }
 ```
-Afterwards, testing is done through the endpoints specified above. A suite of tests is described in the video demo, available here: **link**
+Afterwards, testing is done through the endpoints specified above. A suite of tests as well as a walkthrough of the code are described in the video demo, available here: [**link**](https://youtu.be/CoVyP9KE-bQ)
 
 ## Future Enhancements
 
