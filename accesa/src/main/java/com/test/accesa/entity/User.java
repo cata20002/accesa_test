@@ -23,7 +23,4 @@ public class User {
     @Column(nullable = false, name = "name")
     private String name;
 
-    @Transient
-    private Map<String, Double> discountAlerts;
-
 }
