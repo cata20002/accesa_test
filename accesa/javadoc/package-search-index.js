@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.test.accesa"},{"l":"com.test.accesa.controller"},{"l":"com.test.accesa.DTO"},{"l":"com.test.accesa.entity"},{"l":"com.test.accesa.repository"},{"l":"com.test.accesa.service"}];updateSearchResults();

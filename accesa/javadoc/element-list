@@ -1,0 +1,6 @@
+com.test.accesa
+com.test.accesa.controller
+com.test.accesa.DTO
+com.test.accesa.entity
+com.test.accesa.repository
+com.test.accesa.service
